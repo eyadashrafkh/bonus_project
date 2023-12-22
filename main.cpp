@@ -19,6 +19,7 @@ std::queue<Process> queue1, queue2, queue3;
 
 
 
+// Function to print the sizes of the three queues
 void printQueueSizes() {
     printf("Queue 1 size: %zu\n", queue1.size());
     printf("Queue 2 size: %zu\n", queue2.size());
@@ -26,13 +27,14 @@ void printQueueSizes() {
 }
 
 
+// Function to generate a random number between min and max (inclusive)
 int generateRandomNumber(int min, int max) {
     static bool initialized = false;
     if (!initialized) {
-        std::srand(std::time(nullptr));
+        std::srand(std::time(nullptr)); // Initialize random seed
         initialized = true;
     }
-    return min + std::rand() % (max - min + 1);
+    return min + std::rand() % (max - min + 1); // Generate random number
 }
 
 
@@ -109,6 +111,7 @@ void processTask(std::queue<Process>& taskQueue, int queueNumber, int priority) 
 }
 
 
+// Main function
 int main() {
 
     std::thread t1(processTask, std::ref(queue1), 1, 2);
@@ -124,6 +127,7 @@ int main() {
         lock.unlock();
         cv.notify_all();
     }
+    
     processed = true;
     ready = true;
     cv.notify_all();
